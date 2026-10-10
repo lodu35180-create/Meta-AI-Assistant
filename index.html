@@ -1,1 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta AI – Your Personal AI Assistant That Gets Things Done</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        meta: {
+                            blue: '#0064E0',
+                            blueHover: '#0053BA',
+                            dark: '#1C2B33',
+                            lightBg: '#F5F7FA',
+                            accent: '#0A78F5',
+                            border: '#E4E6EB',
+                            cardBg: '#F0F4F9'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 100, 224, 0.08)',
+                        'phone': '0 25px 60px -15px rgba(0, 0, 0, 0.18), 0 10px 20px -5px rgba(0, 0, 0, 0.08)',
+                        'card-hover': '0 20px 35px -10px rgba(0, 80, 200, 0.12)'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            background-color: #FFFFFF;
+            color: #1C2B33;
+        }
 
+        /* Ethereal Meta AI Atmospheric Gradients */
+        .meta-hero-gradient {
+            background: radial-gradient(circle at 75% 20%, rgba(168, 214, 255, 0.65) 0%, rgba(206, 230, 255, 0.35) 30%, rgba(240, 246, 255, 0.1) 70%),
+                        radial-gradient(circle at 20% 40%, rgba(209, 224, 255, 0.4) 0%, rgba(255, 255, 255, 0) 50%),
+                        linear-gradient(180deg, #F0F6FF 0%, #FFFFFF 85%);
+        }
+
+        .meta-ai-badge-gradient {
+            background: linear-gradient(135deg, #0064E0 0%, #7928CA 50%, #FF0080 100%);
+        }
+
+        .meta-ring-gradient {
+            background: conic-gradient(from 180deg at 50% 50%, #0064E0 0deg, #6C5CE7 90deg, #FD79A8 180deg, #70A1FF 270deg, #0064E0 360deg);
+        }
+
+        .soft-card-gradient {
+            background: linear-gradient(145deg, rgba(235, 244, 255, 0.8) 0%, rgba(243, 247, 254, 0.95) 100%);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Phone Mockup Chrome Styling */
+        .phone-frame {
+            border: 8px solid #1A1F2C;
+            border-radius: 44px;
+            box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+            position: relative;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .phone-island {
+            width: 100px;
+            height: 22px;
+            background-color: #1A1F2C;
+            border-radius: 20px;
+            margin: 8px auto 0 auto;
+            position: relative;
+            z-index: 30;
+        }
+
+        /* Hide Scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Tab Transition */
+        .tab-btn.active {
+            color: #0064E0;
+            border-color: #0064E0;
+            font-weight: 600;
+        }
+
+        /* Accordion transition */
+        .accordion-content {
+            transition: max-height 0.35s ease-out, opacity 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.expanded {
+            max-height: 400px;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- TOP NAVIGATION -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-gray-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center p-0.5 meta-ring-gradient shadow-sm transition-transform group-hover:scale-105">
+                    <div class="w-full h-full bg-white rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-meta-blue" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16.995 3.003c-2.316 0-4.321 1.258-5.385 3.125A6.096 6.096 0 0 0 6.225 3C2.787 3 0 5.79 0 9.231c0 3.86 3.176 7.42 7.828 11.233.99.813 2.128 1.636 3.385 2.536 1.257-.9 2.395-1.723 3.385-2.536C19.244 16.651 22.42 13.09 22.42 9.23c0-3.44-2.787-6.228-6.225-6.228z" fill="none"/>
+                            <!-- Meta AI Gradient Ring Style Icon -->
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 3.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13z" fill="#0064E0"/>
+                        </svg>
+                    </div>
+                </div>
+                <span class="font-bold text-lg tracking-tight text-gray-900 flex items-center gap-1">
+                    Meta <span class="text-meta-blue font-semibold">AI</span>
+                </span>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+                <a href="#features" class="hover:text-meta-blue transition-colors">Features</a>
+                <a href="#chat-experience" class="hover:text-meta-blue transition-colors">Chat Experience</a>
+                <a href="#ecosystem" class="hover:text-meta-blue transition-colors">Where it Lives</a>
+                <a href="#business" class="hover:text-meta-blue transition-colors">Business</a>
+                <a href="#faq" class="hover:text-meta-blue transition-colors">FAQ</a>
+            </nav>
+
+            <!-- CTA Action -->
+            <div class="flex items-center gap-3">
+                <a href="https://meta.ai" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center text-sm font-medium text-gray-700 hover:text-meta-blue px-3 py-1.5 transition-colors">
+                    Try on web
+                </a>
+                <a href="#chat-experience" class="bg-meta-blue hover:bg-meta-blueHover text-white text-sm font-medium px-5 py-2 rounded-full shadow-sm hover:shadow transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-1.5">
+                    <span>Try Meta AI</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-32 pb-20 md:pt-40 md:pb-32 meta-hero-gradient overflow-hidden">
+        <!-- Subtle background glow orbs -->
+        <div class="absolute top-1/4 right-10 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse pointer-events-none"></div>
+        <div class="absolute top-1/3 left-10 w-80 h-80 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-35 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Hero Left: Typography & CTAs -->
+                <div class="lg:col-span-6 text-center lg:text-left space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50/90 border border-blue-200/80 text-xs font-semibold text-meta-blue uppercase tracking-wider shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-meta-blue animate-ping"></span>
+                        Introducing Meta AI 2026
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-950 leading-[1.12]">
+                        Your personal AI assistant that gets things done
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-gray-600 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        Get answers, create custom images, organize your day, and learn anything new with the assistant built into the apps you already love.
+                    </p>
+
+                    <!-- Store Badges & Web Link -->
+                    <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <div class="flex items-center gap-3">
+                            <!-- App Store Button -->
+                            <a href="#app" class="flex items-center gap-2.5 bg-black hover:bg-gray-800 text-white px-4 py-2.5 rounded-xl text-left transition-all shadow-md">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 1.01-2.87-.96.04-2.13.65-2.82 1.45-.61.71-1.15 1.77-1.01 2.82 1.07.08 2.19-.58 2.82-1.4"/>
+                                </svg>
+                                <div>
+                                    <div class="text-[9px] uppercase tracking-wider text-gray-300 font-medium leading-none">Download on the</div>
+                                    <div class="text-xs font-semibold leading-tight">App Store</div>
+                                </div>
+                            </a>
+
+                            <!-- Google Play Button -->
+                            <a href="#app" class="flex items-center gap-2.5 bg-black hover:bg-gray-800 text-white px-4 py-2.5 rounded-xl text-left transition-all shadow-md">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                    <path d="M3.609 1.814L13.792 12 3.61 22.186a2.023 2.023 0 0 1-.225-.947V2.761c0-.348.082-.676.224-.947zm11.23 11.23l2.25 2.25-10.99 6.347 8.74-8.597zm0-2.088L6.099 2.36 17.09 8.706l-2.251 2.25zm1.472 1.044l3.155-1.821c.883-.51.883-1.341 0-1.851l-3.155-1.821-2.13 2.13 2.13 2.13z"/>
+                                </svg>
+                                <div>
+                                    <div class="text-[9px] uppercase tracking-wider text-gray-300 font-medium leading-none">GET IT ON</div>
+                                    <div class="text-xs font-semibold leading-tight">Google Play</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-center lg:justify-start gap-2 text-sm text-gray-600 font-medium">
+                        <i data-lucide="globe" class="w-4 h-4 text-meta-blue"></i>
+                        <span>Or experience directly in your browser:</span>
+                        <a href="https://meta.ai" class="text-meta-blue hover:underline inline-flex items-center gap-1 font-semibold">
+                            meta.ai <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Right: Interactive Mobile Mockup + Floating Prompt Badges -->
+                <div class="lg:col-span-6 relative flex justify-center items-center">
+                    
+                    <!-- Floating Meta prompt bubble -->
+                    <div class="absolute -top-6 left-4 md:-left-4 z-40 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-3 transform -rotate-1 hover:rotate-0 transition-transform">
+                        <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-500 via-indigo-500 to-pink-500 flex items-center justify-center text-white text-xs shadow-sm">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                        </div>
+                        <div class="text-xs text-gray-800">
+                            <span class="font-semibold block text-gray-900">"Imagine a tranquil Nordic living room"</span>
+                            <span class="text-gray-400 text-[10px]">Meta AI • Generated in 1.2s</span>
+                        </div>
+                    </div>
+
+                    <!-- Main Phone Centerpiece -->
+                    <div class="w-[300px] sm:w-[325px] h-[610px] phone-frame shadow-phone relative">
+                        <!-- Dynamic Island -->
+                        <div class="phone-island"></div>
+
+                        <!-- Screen Content -->
+                        <div class="p-4 pt-3 flex flex-col h-[570px] justify-between">
+                            
+                            <!-- Phone Top App Bar -->
+                            <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full meta-ring-gradient p-0.5">
+                                        <div class="w-full h-full bg-white rounded-full flex items-center justify-center">
+                                            <div class="w-3 h-3 rounded-full bg-meta-blue"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs font-bold text-gray-800">Meta AI</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-400">
+                                    <i data-lucide="more-horizontal" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+
+                            <!-- Chat Messages Feed inside mockup -->
+                            <div class="space-y-3.5 flex-1 overflow-y-auto pt-2 no-scrollbar">
+                                <!-- User query -->
+                                <div class="flex justify-end">
+                                    <div class="bg-blue-600 text-white rounded-2xl rounded-tr-sm px-3.5 py-2 text-xs max-w-[85%] shadow-sm leading-relaxed">
+                                        Help me design a modern interior palette and give me ideas for my studio apartment.
+                                    </div>
+                                </div>
+
+                                <!-- AI Assistant Response -->
+                                <div class="flex items-start gap-2">
+                                    <div class="w-5 h-5 rounded-full bg-meta-blue text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0 mt-0.5">
+                                        AI
+                                    </div>
+                                    <div class="bg-gray-100 text-gray-800 rounded-2xl rounded-tl-sm px-3.5 py-2.5 text-xs max-w-[88%] leading-relaxed space-y-2">
+                                        <p>Here are 3 warm-minimalist aesthetic concepts tailored for studio spaces:</p>
+                                        <div class="space-y-1 font-medium text-[11px] text-gray-700">
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-meta-blue"></span>
+                                                <span>Earthy Terracotta & Cream Accents</span>
+                                            </div>
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                                                <span>Scandinavian Light Oak & Sage</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-[10px] text-gray-500">I also generated interior visual inspirations below:</p>
+                                    </div>
+                                </div>
+
+                                <!-- AI Generated Image Previews Carousel within Phone -->
+                                <div class="grid grid-cols-2 gap-2 pt-1">
+                                    <div class="rounded-xl overflow-hidden border border-gray-100 shadow-sm relative group cursor-pointer">
+                                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=400&q=80" alt="Nordic Studio" class="w-full h-24 object-cover">
+                                        <div class="absolute bottom-1 right-1 bg-black/60 backdrop-blur-xs text-[8px] text-white px-1.5 py-0.5 rounded">
+                                            Imagine
+                                        </div>
+                                    </div>
+                                    <div class="rounded-xl overflow-hidden border border-gray-100 shadow-sm relative group cursor-pointer">
+                                        <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=400&q=80" alt="Warm Minimalist Apartment" class="w-full h-24 object-cover">
+                                        <div class="absolute bottom-1 right-1 bg-black/60 backdrop-blur-xs text-[8px] text-white px-1.5 py-0.5 rounded">
+                                            Imagine
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Phone Bottom Input Area -->
+                            <div class="pt-2">
+                                <div class="bg-gray-100 rounded-full px-3 py-2 flex items-center justify-between text-xs text-gray-400">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-meta-blue"></i>
+                                        <span>Ask Meta AI anything...</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5 text-gray-500">
+                                        <i data-lucide="mic" class="w-3.5 h-3.5"></i>
+                                        <i data-lucide="arrow-up-circle" class="w-4 h-4 text-meta-blue"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Mini Floating Gallery Card (Right overlap) -->
+                    <div class="hidden sm:block absolute -bottom-6 -right-4 w-44 rounded-2xl bg-white p-2.5 shadow-2xl border border-gray-100 z-30 transition-transform hover:-translate-y-1">
+                        <div class="rounded-xl overflow-hidden mb-2 relative">
+                            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=350&q=80" alt="Modern Interior Decor" class="w-full h-24 object-cover">
+                            <div class="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-black/50 text-[9px] text-white rounded font-medium">
+                                Style 03
+                            </div>
+                        </div>
+                        <div class="text-[11px] font-semibold text-gray-900 leading-snug">Minimalist Loft</div>
+                        <div class="text-[9px] text-gray-400">Rendered via Llama 3.3</div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: NEW FEATURES, BUILT FOR YOUR LIFE -->
+    <section id="features" class="py-24 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <span class="text-xs font-bold text-meta-blue tracking-widest uppercase">Features</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2 tracking-tight">
+                        New features, built for your life
+                    </h2>
+                    <p class="text-gray-600 mt-3 max-w-2xl text-base sm:text-lg">
+                        From answering complex questions to creating vibrant imagery on demand, experience intelligence that integrates seamlessly with your world.
+                    </p>
+                </div>
+                <div>
+                    <a href="https://meta.ai" class="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-meta-blue text-white font-medium text-sm hover:bg-meta-blueHover shadow-sm transition-all">
+                        <span>Explore</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Features 2-Column Showcase -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left: Interactive Vertical Feature Accordion -->
+                <div class="lg:col-span-5 space-y-4" id="feature-selector-group">
+                    
+                    <!-- Feature 1 -->
+                    <div class="feature-item cursor-pointer p-6 rounded-2xl border-2 border-meta-blue bg-blue-50/40 transition-all duration-300" data-feature="0">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-meta-blue"></span>
+                                Intelligent conversations
+                            </h3>
+                            <i data-lucide="chevron-right" class="w-5 h-5 text-meta-blue transform rotate-90 transition-transform"></i>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2.5 leading-relaxed feature-desc">
+                            Chat with Meta AI to plan vacations, brainstorm novel business concepts, debug code, or receive step-by-step guidance whenever you need it.
+                        </p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="feature-item cursor-pointer p-6 rounded-2xl border border-gray-200 hover:border-gray-300 bg-white transition-all duration-300" data-feature="1">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-transparent"></span>
+                                Create custom images
+                            </h3>
+                            <i data-lucide="chevron-right" class="w-5 h-5 text-gray-400 transition-transform"></i>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2.5 leading-relaxed hidden feature-desc">
+                            Transform your words into photorealistic artworks, logo designs, avatars, or moodboards instantly using the /imagine generative engine.
+                        </p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="feature-item cursor-pointer p-6 rounded-2xl border border-gray-200 hover:border-gray-300 bg-white transition-all duration-300" data-feature="2">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-transparent"></span>
+                                Stay organized
+                            </h3>
+                            <i data-lucide="chevron-right" class="w-5 h-5 text-gray-400 transition-transform"></i>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2.5 leading-relaxed hidden feature-desc">
+                            Summarize lengthy articles, draft calendar agendas, build grocery checklists, and extract action items from group discussions.
+                        </p>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="feature-item cursor-pointer p-6 rounded-2xl border border-gray-200 hover:border-gray-300 bg-white transition-all duration-300" data-feature="3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-transparent"></span>
+                                Learn something new
+                            </h3>
+                            <i data-lucide="chevron-right" class="w-5 h-5 text-gray-400 transition-transform"></i>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2.5 leading-relaxed hidden feature-desc">
+                            Master new languages, understand astrophysics concepts in plain terms, or get interactive quizzes tailored to your knowledge level.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Right: Dynamic Device Card that updates with active feature -->
+                <div class="lg:col-span-7 flex justify-center">
+                    <div class="w-full max-w-lg bg-gradient-to-br from-slate-100 via-blue-50/60 to-slate-200 p-6 sm:p-8 rounded-3xl shadow-xl border border-gray-200/80 relative overflow-hidden" id="feature-preview-container">
+                        
+                        <!-- Floating meta AI pill -->
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-gray-800 shadow-sm border border-gray-200">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-meta-blue"></i>
+                                <span id="feature-preview-badge">Meta AI • Smart Assistant</span>
+                            </div>
+                            <span class="text-xs text-gray-400 font-medium">Real-time Preview</span>
+                        </div>
+
+                        <!-- Inner Display Card -->
+                        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 space-y-4" id="feature-display-content">
+                            <!-- Header prompt -->
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-full bg-meta-blue flex items-center justify-center text-white flex-shrink-0">
+                                    <i data-lucide="user" class="w-4 h-4"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-xs text-gray-400 font-medium">Prompt</div>
+                                    <p class="text-sm font-semibold text-gray-900" id="preview-prompt-text">
+                                        "Explain how quantum computing differs from classical computers in simple words."
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Image or Graphic Area -->
+                            <div id="preview-visual" class="rounded-xl overflow-hidden border border-gray-100 bg-gray-50 aspect-video relative flex items-center justify-center">
+                                <img id="preview-image" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=80" alt="Feature Representation" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
+                                    <div class="text-white text-xs font-medium" id="preview-overlay-text">
+                                        ⚡ Intelligent reasoning across science, technology and literature
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Meta Response Bubble -->
+                            <div class="bg-gray-50 rounded-xl p-3.5 text-xs text-gray-700 leading-relaxed border border-gray-100 space-y-2" id="preview-response-body">
+                                <div class="flex items-center gap-1.5 font-bold text-meta-blue text-[11px]">
+                                    <i data-lucide="sparkles" class="w-3 h-3"></i>
+                                    <span>Meta AI Response</span>
+                                </div>
+                                <p id="preview-response-text">
+                                    Think of a classical computer like a diligent librarian reading books one by one. A quantum computer uses quantum bits (qubits) to test multiple combinations simultaneously, solving specific calculations millions of times faster.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 3: THE META AI CHAT EXPERIENCE -->
+    <section id="chat-experience" class="py-24 bg-meta-lightBg border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+                <div>
+                    <span class="text-xs font-bold text-meta-blue tracking-widest uppercase">Conversational</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2 tracking-tight">
+                        The Meta AI chat experience
+                    </h2>
+                    <p class="text-gray-600 mt-3 max-w-2xl text-base sm:text-lg">
+                        A state-of-the-art conversational engine that adapts to how you think, plan, and create across visual and text modalities.
+                    </p>
+                </div>
+                <div>
+                    <a href="https://meta.ai" class="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-meta-blue text-white font-medium text-sm hover:bg-meta-blueHover shadow-sm transition-all">
+                        <span>Try now</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Horizontal Experience Tabs -->
+            <div class="border-b border-gray-200 mb-8 overflow-x-auto no-scrollbar">
+                <div class="flex space-x-8 min-w-max">
+                    <button class="chat-tab-btn tab-btn active pb-4 px-1 border-b-2 font-medium text-sm transition-all text-meta-blue border-meta-blue flex items-center gap-2" data-tab="feed">
+                        <i data-lucide="message-square" class="w-4 h-4"></i>
+                        <span>Full-feed chat</span>
+                    </button>
+                    <button class="chat-tab-btn tab-btn pb-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-900 transition-all flex items-center gap-2" data-tab="attachments">
+                        <i data-lucide="paperclip" class="w-4 h-4"></i>
+                        <span>Attachments & Files</span>
+                    </button>
+                    <button class="chat-tab-btn tab-btn pb-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-900 transition-all flex items-center gap-2" data-tab="voice">
+                        <i data-lucide="mic" class="w-4 h-4"></i>
+                        <span>Voice chat</span>
+                    </button>
+                    <button class="chat-tab-btn tab-btn pb-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-900 transition-all flex items-center gap-2" data-tab="photo">
+                        <i data-lucide="image" class="w-4 h-4"></i>
+                        <span>Photo edits</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Descriptive Text for Tab -->
+            <p id="chat-tab-description" class="text-gray-600 text-sm md:text-base max-w-3xl mb-12">
+                Engage in natural fluid conversations, brainstorm ideas, get recommendations, and ask follow-up questions. Meta AI keeps context and helps you explore ideas deeply without missing a beat.
+            </p>
+
+            <!-- Large Gradient Stage hosting dual mobile screens -->
+            <div class="w-full bg-gradient-to-r from-blue-100 via-indigo-50 to-sky-100 rounded-3xl p-6 sm:p-12 border border-blue-200/60 shadow-glass">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 justify-items-center items-center">
+                    
+                    <!-- Phone 1: Contextual Conversation -->
+                    <div class="w-[290px] sm:w-[315px] h-[550px] phone-frame bg-white shadow-phone">
+                        <div class="phone-island"></div>
+                        <div class="p-4 flex flex-col h-[510px] justify-between">
+                            
+                            <!-- Header -->
+                            <div class="flex items-center justify-between pb-2 border-b border-gray-100">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-meta-blue flex items-center justify-center text-white text-[10px] font-bold">
+                                        M
+                                    </div>
+                                    <div class="text-left">
+                                        <div class="text-xs font-bold text-gray-900">Meta AI</div>
+                                        <div class="text-[9px] text-green-600 flex items-center gap-1 font-medium">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Always active
+                                        </div>
+                                    </div>
+                                </div>
+                                <i data-lucide="info" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+
+                            <!-- Conversation content -->
+                            <div class="space-y-3 overflow-y-auto no-scrollbar py-2 text-xs">
+                                <div class="flex justify-end">
+                                    <div class="bg-meta-blue text-white rounded-2xl rounded-tr-none px-3 py-2 max-w-[85%]">
+                                        Can you organize a 3-day slow travel weekend in Kyoto? Include matcha spots.
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-2">
+                                    <div class="w-5 h-5 rounded-full bg-meta-blue text-white flex items-center justify-center text-[9px] mt-0.5">
+                                        AI
+                                    </div>
+                                    <div class="bg-gray-100 text-gray-800 rounded-2xl rounded-tl-none p-3 max-w-[88%] space-y-2">
+                                        <p class="font-semibold text-gray-900">Day 1: Arashiyama & Zen Gardens</p>
+                                        <ul class="text-[11px] list-disc list-inside space-y-1 text-gray-700">
+                                            <li>Morning: Bamboo Grove early stroll</li>
+                                            <li>Matcha break: Tea house at Okochi Sanso</li>
+                                            <li>Sunset: Togetsukyo Bridge view</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Quick pill choices -->
+                                <div class="flex flex-wrap gap-1.5 pl-6">
+                                    <button class="bg-white border border-blue-200 text-meta-blue rounded-full px-2.5 py-1 text-[10px] font-medium hover:bg-blue-50">
+                                        🍵 Best tea ceremonies
+                                    </button>
+                                    <button class="bg-white border border-blue-200 text-meta-blue rounded-full px-2.5 py-1 text-[10px] font-medium hover:bg-blue-50">
+                                        🚄 Train passes guide
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Bottom textfield -->
+                            <div class="bg-gray-100 rounded-full px-3 py-2 flex items-center justify-between text-xs text-gray-400">
+                                <span>Message Meta AI...</span>
+                                <i data-lucide="send" class="w-3.5 h-3.5 text-meta-blue"></i>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Phone 2: Multimodal Photo Analysis -->
+                    <div class="w-[290px] sm:w-[315px] h-[550px] phone-frame bg-white shadow-phone">
+                        <div class="phone-island"></div>
+                        <div class="p-4 flex flex-col h-[510px] justify-between">
+                            
+                            <!-- Header -->
+                            <div class="flex items-center justify-between pb-2 border-b border-gray-100">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">
+                                        AI
+                                    </div>
+                                    <div class="text-left">
+                                        <div class="text-xs font-bold text-gray-900">Vision Analysis</div>
+                                        <div class="text-[9px] text-gray-400 font-medium">Multimodal Llama 3.3</div>
+                                    </div>
+                                </div>
+                                <i data-lucide="sparkles" class="w-4 h-4 text-meta-blue"></i>
+                            </div>
+
+                            <!-- Conversation content with photo analysis -->
+                            <div class="space-y-3 overflow-y-auto no-scrollbar py-2 text-xs">
+                                <!-- User sends food image -->
+                                <div class="flex justify-end">
+                                    <div class="max-w-[85%] rounded-2xl rounded-tr-none overflow-hidden border border-gray-200 shadow-xs">
+                                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80" alt="Healthy Salmon Bowl" class="w-full h-32 object-cover">
+                                        <div class="bg-blue-600 text-white p-2 text-[11px]">
+                                            What ingredients are in this salad and what's the estimated protein?
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- AI Breakdown -->
+                                <div class="flex items-start gap-2">
+                                    <div class="w-5 h-5 rounded-full bg-meta-blue text-white flex items-center justify-center text-[9px] mt-0.5">
+                                        AI
+                                    </div>
+                                    <div class="bg-gray-100 text-gray-800 rounded-2xl rounded-tl-none p-3 max-w-[88%] space-y-1.5">
+                                        <div class="font-bold text-[11px] text-gray-900">🥗 Identified Ingredients:</div>
+                                        <div class="text-[10px] text-gray-600 leading-snug">
+                                            Grilled salmon fillet, quinoa, avocado slices, cherry tomatoes, and microgreens.
+                                        </div>
+                                        <div class="pt-1 border-t border-gray-200 text-[10px] text-meta-blue font-semibold">
+                                            Estimated Protein: ~34g • Cal: ~520 kcal
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom textfield -->
+                            <div class="bg-gray-100 rounded-full px-3 py-2 flex items-center justify-between text-xs text-gray-400">
+                                <span>Upload photo or ask follow-up...</span>
+                                <i data-lucide="camera" class="w-3.5 h-3.5 text-meta-blue"></i>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 4: META AI LIVES WHERE YOU DO -->
+    <section id="ecosystem" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <span class="text-xs font-bold text-meta-blue tracking-widest uppercase">Ecosystem</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2 tracking-tight">
+                        Meta AI lives where you do
+                    </h2>
+                    <p class="text-gray-600 mt-3 max-w-2xl text-base sm:text-lg">
+                        Available on iOS and Android, on desktop, at meta.ai, and across your favorite apps.
+                    </p>
+                </div>
+                <div>
+                    <a href="https://meta.ai" class="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-meta-blue text-white font-medium text-sm hover:bg-meta-blueHover shadow-sm transition-all">
+                        <span>Explore</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Featured Banner Card: Ray-Ban Meta Smart Glasses -->
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-200 mb-10 group">
+                <div class="aspect-[16/9] md:aspect-[21/9] w-full relative">
+                    <!-- High-res Ray-Ban Meta Smart Glasses visual -->
+                    <img src="https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1600&q=80" 
+                         alt="Ray-Ban Meta Smart Glasses" 
+                         class="w-full h-full object-cover object-center filter brightness-90 group-hover:scale-102 transition-transform duration-700">
+                    
+                    <!-- Dark Gradient Overlay for text legibility -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent flex items-center">
+                        <div class="p-8 sm:p-12 md:p-16 max-w-xl text-white space-y-4">
+                            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium tracking-wide">
+                                <i data-lucide="glasses" class="w-4 h-4"></i>
+                                <span>Ray-Ban | Meta</span>
+                            </div>
+
+                            <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight">
+                                Get answers from Meta AI, translate in real time and learn about the world around you, hands-free.
+                            </h3>
+
+                            <p class="text-sm sm:text-base text-gray-300 font-normal">
+                                Say "Hey Meta" to snap high-res photos, make hands-free calls, livestream directly, or translate menu signs instantaneously.
+                            </p>
+
+                            <div class="pt-2">
+                                <a href="https://www.meta.com/smart-glasses/" target="_blank" class="inline-flex items-center gap-2 bg-white text-gray-950 hover:bg-gray-100 font-semibold text-sm px-6 py-3 rounded-full transition-all shadow-md">
+                                    <span>Shop Ray-Ban Meta</span>
+                                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2-Column Grid: Web Desktop App + Family of Apps Matrix -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                
+                <!-- Left: Desktop Web Card -->
+                <div class="lg:col-span-6 bg-gradient-to-br from-blue-50 to-indigo-50/50 rounded-3xl p-8 border border-blue-100 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <!-- Mock browser frame -->
+                        <div class="bg-white rounded-2xl shadow-md border border-gray-200/80 overflow-hidden mb-6">
+                            <!-- Browser tab header -->
+                            <div class="bg-gray-100 px-4 py-2.5 border-b border-gray-200 flex items-center gap-2">
+                                <div class="flex gap-1.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                                </div>
+                                <div class="bg-white text-[11px] text-gray-500 rounded-md px-3 py-1 flex items-center justify-center flex-1 max-w-xs mx-auto border border-gray-200 font-mono">
+                                    https://meta.ai
+                                </div>
+                            </div>
+
+                            <!-- Inside web preview -->
+                            <div class="p-6 bg-gradient-to-b from-white to-blue-50/20">
+                                <div class="flex items-center gap-2 mb-4">
+                                    <div class="w-6 h-6 rounded-full bg-meta-blue flex items-center justify-center text-white text-[10px] font-bold">
+                                        M
+                                    </div>
+                                    <span class="text-xs font-bold text-gray-800">Meta AI on Desktop</span>
+                                </div>
+                                <div class="space-y-2 text-xs text-gray-600">
+                                    <div class="bg-gray-100 p-2.5 rounded-xl text-gray-800 font-medium">
+                                        "Summarize key trends in sustainable building materials for 2026."
+                                    </div>
+                                    <div class="p-2.5 rounded-xl border border-blue-100 bg-white shadow-xs text-[11px]">
+                                        🌱 Emerging trends include cross-laminated timber (CLT), self-healing bio-concrete, and aerogel insulation...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-gray-900">Meta AI on the web</h3>
+                        <p class="text-sm text-gray-600 mt-2">
+                            Access the full suite of conversational capabilities, document summaries, and high-resolution generative image tools straight from your desktop browser.
+                        </p>
+                    </div>
+
+                    <div class="pt-6">
+                        <a href="https://meta.ai" class="inline-flex items-center gap-2 bg-meta-blue hover:bg-meta-blueHover text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-colors shadow-sm">
+                            <i data-lucide="laptop" class="w-4 h-4"></i>
+                            <span>Start chatting on the web</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: 4-App Matrix (Facebook, WhatsApp, Instagram, Messenger) -->
+                <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <!-- Facebook Card -->
+                    <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:border-blue-300 hover:shadow-card-hover transition-all duration-300 group">
+                        <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </div>
+                        <h4 class="text-base font-bold text-gray-900">Facebook</h4>
+                        <p class="text-xs text-gray-600 mt-1.5 leading-relaxed">
+                            Discover deeper context behind post topics, get recipe variants in cooking groups, or translate posts in real time.
+                        </p>
+                    </div>
+
+                    <!-- WhatsApp Card -->
+                    <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:border-green-300 hover:shadow-card-hover transition-all duration-300 group">
+                        <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                <path d="M12.031 2C6.5 2 2.012 6.484 2.012 12c0 2.053.624 3.966 1.7 5.568L2 22l4.633-1.636C8.163 21.328 10.024 22 12.03 22c5.53 0 10.02-4.484 10.02-10s-4.49-10-10.019-10zm5.82 14.156c-.244.686-1.417 1.309-1.968 1.364-.535.056-1.203.078-3.483-.873-2.92-1.218-4.795-4.22-4.94-4.417-.146-.197-1.184-1.577-1.184-3.007s.746-2.137 1.01-2.428c.264-.29.58-.363.774-.363.193 0 .387 0 .556.009.18.01.42.069.64.6.244.59.825 2.02.9 2.167.075.148.12.325.02.523-.1.198-.15.32-.295.49-.147.17-.31.38-.44.51-.148.147-.302.308-.13.604.172.296.766 1.263 1.642 2.044 1.127 1.004 2.078 1.315 2.373 1.463.296.148.47.123.645-.074.174-.197.747-.87 0.945-1.167.198-.297.395-.247.668-.148.272.099 1.728.815 2.025.963.296.148.494.222.568.346.074.123.074.715-.17 1.401z"/>
+                            </svg>
+                        </div>
+                        <h4 class="text-base font-bold text-gray-900">WhatsApp</h4>
+                        <p class="text-xs text-gray-600 mt-1.5 leading-relaxed">
+                            Draft quick messages, settle debate questions in group chats, and generate photos right inside personal threads.
+                        </p>
+                    </div>
+
+                    <!-- Instagram Card -->
+                    <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:border-pink-300 hover:shadow-card-hover transition-all duration-300 group">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </div>
+                        <h4 class="text-base font-bold text-gray-900">Instagram</h4>
+                        <p class="text-xs text-gray-600 mt-1.5 leading-relaxed">
+                            Generate captions and story ideas, customize backgrounds, and chat directly in your Direct Messages.
+                        </p>
+                    </div>
+
+                    <!-- Messenger Card -->
+                    <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:border-blue-400 hover:shadow-card-hover transition-all duration-300 group">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        </div>
+                        <h4 class="text-base font-bold text-gray-900">Messenger</h4>
+                        <p class="text-xs text-gray-600 mt-1.5 leading-relaxed">
+                            Coordinate group event details, run trivia challenges with friends, and share AI-generated memes instantly.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 5: MEET THE AI ASSISTANT FOR BUSINESS -->
+    <section id="business" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-gray-900 via-slate-800 to-gray-950 text-white shadow-2xl">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 items-center">
+                    <!-- Left Copy -->
+                    <div class="lg:col-span-7 p-8 sm:p-12 md:p-16 space-y-6 z-10">
+                        <div class="inline-flex items-center gap-2 bg-blue-500/20 text-blue-300 border border-blue-400/30 px-3.5 py-1.5 rounded-full text-xs font-semibold">
+                            <i data-lucide="briefcase" class="w-3.5 h-3.5"></i>
+                            <span>Meta AI for Business</span>
+                        </div>
+
+                        <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
+                            Meet the AI assistant that will transform your business
+                        </h2>
+
+                        <p class="text-gray-300 text-base sm:text-lg max-w-lg font-normal leading-relaxed">
+                            Support your customers around the clock, create engaging advertising content, and scale customer conversations effortlessly.
+                        </p>
+
+                        <div class="pt-2 flex flex-wrap gap-4">
+                            <a href="#business-contact" class="bg-meta-blue hover:bg-meta-blueHover text-white px-7 py-3 rounded-full text-sm font-semibold transition-all shadow-md">
+                                Get started
+                            </a>
+                            <a href="#demo" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3 rounded-full text-sm font-semibold transition-all">
+                                Request a demo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Visual / Business Image -->
+                    <div class="lg:col-span-5 relative h-72 sm:h-96 lg:h-full min-h-[360px]">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80" 
+                             alt="Professional entrepreneur working with AI" 
+                             class="w-full h-full object-cover object-center filter brightness-95">
+                        
+                        <!-- Floating KPI Badge -->
+                        <div class="absolute bottom-6 left-6 right-6 sm:right-auto bg-white/95 backdrop-blur-md text-gray-900 p-4 rounded-2xl shadow-2xl border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="trending-up" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold">24/7 Automated Customer Support</div>
+                                <div class="text-[11px] text-gray-500">Respond to customer inquiries under 3 seconds</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: FREQUENTLY ASKED QUESTIONS -->
+    <section id="faq" class="py-24 bg-meta-lightBg border-t border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <span class="text-xs font-bold text-meta-blue tracking-widest uppercase">Answers</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2 tracking-tight">
+                    Frequently asked questions
+                </h2>
+                <p class="text-gray-600 mt-3 text-base">
+                    Everything you need to know about getting started with Meta AI.
+                </p>
+            </div>
+
+            <!-- Accordion List -->
+            <div class="space-y-4">
+                
+                <!-- FAQ Item 1 -->
+                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs">
+                    <button class="accordion-toggle w-full p-6 text-left flex items-center justify-between font-bold text-gray-900 hover:text-meta-blue transition-colors focus:outline-none">
+                        <span class="text-base sm:text-lg">What is Meta AI?</span>
+                        <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 flex-shrink-0 transition-transform icon-container">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content px-6 pb-6 text-gray-600 text-sm sm:text-base leading-relaxed border-t border-gray-100 pt-4">
+                        Meta AI is your built-in, intelligent assistant powered by state-of-the-art Llama language and vision foundation models. It helps you explore topics, generate ideas, create high-quality photorealistic images, summarize texts, and get real-time info directly across Instagram, WhatsApp, Facebook, Messenger, Ray-Ban Meta glasses, and on the web at meta.ai.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs">
+                    <button class="accordion-toggle w-full p-6 text-left flex items-center justify-between font-bold text-gray-900 hover:text-meta-blue transition-colors focus:outline-none">
+                        <span class="text-base sm:text-lg">Is Meta AI free to use?</span>
+                        <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 flex-shrink-0 transition-transform icon-container">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content px-6 pb-6 text-gray-600 text-sm sm:text-base leading-relaxed border-t border-gray-100 pt-4">
+                        Yes, Meta AI is free to access and use across all supported Meta platforms (WhatsApp, Instagram, Facebook, Messenger) and via your browser on meta.ai. There is no subscription required to interact with the assistant or create images.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs">
+                    <button class="accordion-toggle w-full p-6 text-left flex items-center justify-between font-bold text-gray-900 hover:text-meta-blue transition-colors focus:outline-none">
+                        <span class="text-base sm:text-lg">How do I access Meta AI?</span>
+                        <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 flex-shrink-0 transition-transform icon-container">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content px-6 pb-6 text-gray-600 text-sm sm:text-base leading-relaxed border-t border-gray-100 pt-4">
+                        You can access Meta AI simply by tapping the iridescent ring icon inside WhatsApp, Instagram DMs, Messenger, or Facebook search bars. You can also visit <a href="https://meta.ai" class="text-meta-blue font-semibold hover:underline">meta.ai</a> on any browser, or simply say "Hey Meta" if you are wearing Ray-Ban Meta smart glasses.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs">
+                    <button class="accordion-toggle w-full p-6 text-left flex items-center justify-between font-bold text-gray-900 hover:text-meta-blue transition-colors focus:outline-none">
+                        <span class="text-base sm:text-lg">What makes Meta AI different from other assistants?</span>
+                        <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 flex-shrink-0 transition-transform icon-container">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content px-6 pb-6 text-gray-600 text-sm sm:text-base leading-relaxed border-t border-gray-100 pt-4">
+                        Meta AI seamlessly lives directly where you communicate every day. You don't have to switch apps or copy-paste between windows. You can tag @MetaAI into a group chat on WhatsApp to vote on dinner spots, animate images on Instagram, and even ask questions about what you are seeing in front of you through Ray-Ban Meta smart glasses.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs">
+                    <button class="accordion-toggle w-full p-6 text-left flex items-center justify-between font-bold text-gray-900 hover:text-meta-blue transition-colors focus:outline-none">
+                        <span class="text-base sm:text-lg">How do I generate and edit images using /imagine?</span>
+                        <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 flex-shrink-0 transition-transform icon-container">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content px-6 pb-6 text-gray-600 text-sm sm:text-base leading-relaxed border-t border-gray-100 pt-4">
+                        Simply start your prompt with the word "Imagine" (e.g., "Imagine a futuristic electric motorcycle on Mars in sunset light") or tap the image generator tool. Meta AI will synthesize multiple variations in seconds. You can then request adjustments like "Make it black and white" or "Add a neon halo".
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 7: EXPLORE META AI PRODUCTS -->
+    <section class="py-24 bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="mb-12">
+                <span class="text-xs font-bold text-meta-blue tracking-widest uppercase">Innovation</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2 tracking-tight">
+                    Explore Meta AI products
+                </h2>
+                <p class="text-gray-600 mt-2 text-base">
+                    Hardware, open research, and developer tools powering the future of ambient intelligence.
+                </p>
+            </div>
+
+            <!-- 2-Card Product Showcase -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Product Card 1: Ray-Ban Meta -->
+                <div class="rounded-3xl bg-slate-950 text-white p-8 sm:p-10 flex flex-col justify-between relative overflow-hidden shadow-xl group">
+                    <div class="relative z-10 space-y-4">
+                        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-gray-200">
+                            <i data-lucide="eye" class="w-3.5 h-3.5 text-blue-400"></i>
+                            <span>Smart Wearables</span>
+                        </div>
+
+                        <h3 class="text-2xl sm:text-3xl font-bold leading-tight">
+                            Explore hands-free photo & video capture with Ray-Ban Meta
+                        </h3>
+
+                        <p class="text-gray-400 text-sm leading-relaxed max-w-sm">
+                            Listen to music, make calls, take photos, and ask Meta AI about your surroundings with stylish frames made for everyday life.
+                        </p>
+                    </div>
+
+                    <!-- Images Preview inside card -->
+                    <div class="my-6 grid grid-cols-3 gap-2.5 relative z-10">
+                        <div class="rounded-xl overflow-hidden aspect-square border border-white/10 shadow-sm">
+                            <img src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=300&q=80" alt="Person wearing smart glasses" class="w-full h-full object-cover">
+                        </div>
+                        <div class="rounded-xl overflow-hidden aspect-square border border-white/10 shadow-sm">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Selfie with smart glasses" class="w-full h-full object-cover">
+                        </div>
+                        <div class="rounded-xl overflow-hidden aspect-square border border-white/10 shadow-sm">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80" alt="Hands-free point of view" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 flex items-center gap-3 pt-2">
+                        <a href="https://www.meta.com/smart-glasses/" target="_blank" class="bg-meta-blue hover:bg-meta-blueHover text-white px-5 py-2.5 rounded-full text-xs font-semibold transition-colors shadow-sm">
+                            Shop Ray-Ban
+                        </a>
+                        <a href="https://www.meta.com/smart-glasses/" target="_blank" class="text-gray-300 hover:text-white text-xs font-medium px-4 py-2.5">
+                            Learn more →
+                        </a>
+                    </div>
+
+                    <!-- Subtle background light bloom -->
+                    <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-600 rounded-full mix-blend-screen filter blur-3xl opacity-20 pointer-events-none"></div>
+                </div>
+
+                <!-- Product Card 2: Llama Open Source Models -->
+                <div class="rounded-3xl bg-gradient-to-br from-blue-50 via-sky-50 to-indigo-100 text-gray-900 p-8 sm:p-10 flex flex-col justify-between border border-blue-200 shadow-xl relative overflow-hidden group">
+                    <div class="relative z-10 space-y-4">
+                        <div class="inline-flex items-center gap-2 bg-blue-100 text-meta-blue px-3 py-1 rounded-full text-xs font-semibold">
+                            <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+                            <span>Open Source Research</span>
+                        </div>
+
+                        <h3 class="text-2xl sm:text-3xl font-bold leading-tight">
+                            Build with Llama: Open-source, leading-edge intelligence
+                        </h3>
+
+                        <p class="text-gray-600 text-sm leading-relaxed max-w-sm">
+                            Empowering developers, researchers, and enterprises worldwide to build custom AI experiences with complete control and transparency.
+                        </p>
+                    </div>
+
+                    <!-- Visual Llama emblem -->
+                    <div class="my-6 relative z-10 flex items-center justify-center p-6 bg-white/70 backdrop-blur rounded-2xl border border-white/60 shadow-inner">
+                        <div class="w-20 h-20 rounded-2xl meta-ring-gradient p-1 shadow-md">
+                            <div class="w-full h-full bg-white rounded-xl flex items-center justify-center">
+                                <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                                    🦙
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 flex items-center gap-3 pt-2">
+                        <a href="https://llama.meta.com/" target="_blank" class="bg-meta-blue hover:bg-meta-blueHover text-white px-5 py-2.5 rounded-full text-xs font-semibold transition-colors shadow-sm">
+                            Explore Llama
+                        </a>
+                        <a href="https://llama.meta.com/" target="_blank" class="text-gray-700 hover:text-gray-900 text-xs font-semibold px-4 py-2.5">
+                            View Model Weights →
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-200 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-gray-100">
+                <!-- Col 1: Brand & Social -->
+                <div class="col-span-2 space-y-4">
+                    <a href="#" class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full flex items-center justify-center p-0.5 meta-ring-gradient">
+                            <div class="w-full h-full bg-white rounded-full flex items-center justify-center">
+                                <div class="w-2.5 h-2.5 rounded-full bg-meta-blue"></div>
+                            </div>
+                        </div>
+                        <span class="font-bold text-lg text-gray-900">Meta</span>
+                    </a>
+                    <p class="text-xs text-gray-500 max-w-sm leading-relaxed">
+                        Giving people the power to build community and bring the world closer together with artificial intelligence.
+                    </p>
+                    <div class="flex items-center gap-4 text-gray-400 pt-2">
+                        <a href="#" class="hover:text-meta-blue transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                        <a href="#" class="hover:text-meta-blue transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                        <a href="#" class="hover:text-meta-blue transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                        <a href="#" class="hover:text-meta-blue transition-colors"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+                        <a href="#" class="hover:text-meta-blue transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Products -->
+                <div>
+                    <h5 class="text-xs font-bold text-gray-900 uppercase tracking-wider mb-4">Products</h5>
+                    <ul class="space-y-2.5 text-xs text-gray-600">
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Meta AI</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Ray-Ban Meta</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Llama Models</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Meta Quest 3S</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">WhatsApp</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Instagram</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Research & Developers -->
+                <div>
+                    <h5 class="text-xs font-bold text-gray-900 uppercase tracking-wider mb-4">Research</h5>
+                    <ul class="space-y-2.5 text-xs text-gray-600">
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">FAIR Lab</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">PyTorch</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Open Source AI</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Publications</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Responsible AI</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Safety & Privacy -->
+                <div>
+                    <h5 class="text-xs font-bold text-gray-900 uppercase tracking-wider mb-4">Company & Safety</h5>
+                    <ul class="space-y-2.5 text-xs text-gray-600">
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">About Meta</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Privacy Center</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Safety Guidelines</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Newsroom</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-meta-blue transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright & Region Selector -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-4">
+                <div class="flex items-center gap-6">
+                    <span>© 2026 Meta Platforms, Inc. All rights reserved.</span>
+                    <a href="#" class="hover:underline">Privacy Policy</a>
+                    <a href="#" class="hover:underline">Consumer Health Privacy</a>
+                    <a href="#" class="hover:underline">Cookies</a>
+                </div>
+                <div class="flex items-center gap-2 cursor-pointer hover:text-gray-600">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <span>English (US)</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide vector icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            // 1. Interactive Feature Accordion on Feature Selector Group
+            const featureItems = document.querySelectorAll('.feature-item');
+            const previewPromptText = document.getElementById('preview-prompt-text');
+            const previewImage = document.getElementById('preview-image');
+            const previewOverlayText = document.getElementById('preview-overlay-text');
+            const previewResponseText = document.getElementById('preview-response-text');
+            const previewBadge = document.getElementById('feature-preview-badge');
+
+            const featureData = [
+                {
+                    badge: "Meta AI • Smart Assistant",
+                    prompt: '"Explain how quantum computing differs from classical computers in simple words."',
+                    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=80",
+                    overlay: "⚡ Intelligent reasoning across science, technology and literature",
+                    response: "Think of a classical computer like a diligent librarian reading books one by one. A quantum computer uses quantum bits (qubits) to test multiple combinations simultaneously, solving specific calculations millions of times faster."
+                },
+                {
+                    badge: "Meta AI • Imagine Studio",
+                    prompt: '"Imagine a cyberpunk cafe in the rain with glowing violet neon signage, cinematic 8k"',
+                    img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80",
+                    overlay: "🎨 Instant photorealistic generation powered by generative diffusion",
+                    response: "Generating 4 high-resolution concepts. Added warm ambient reflections on the wet asphalt and cinematic depth-of-field."
+                },
+                {
+                    badge: "Meta AI • Productivity & Organization",
+                    prompt: '"Summarize this 10-page market research PDF into 3 bullet points with action items."',
+                    img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=700&q=80",
+                    overlay: "📋 Automated document summarization, extraction & schedule planning",
+                    response: "Key takeaways: 1) Mobile engagement grew 42% YoY; 2) Micro-influencer conversions outperformed broad ads by 3.1x; Action item: Launch localized WhatsApp pilot by Q3."
+                },
+                {
+                    badge: "Meta AI • Interactive Learning",
+                    prompt: '"Teach me conversational Italian for ordering coffee and pastries like a local in Rome."',
+                    img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80",
+                    overlay: "🌍 Adaptive tutoring, language fluency practice and instant feedback",
+                    response: "Say: 'Un caffè e un cornetto alla crema, per favore.' (A coffee and a cream croissant, please). Bonus tip: In Rome, drink your espresso al banco (at the bar counter)!"
+                }
+            ];
+
+            featureItems.forEach((item) => {
+                item.addEventListener('click', () => {
+                    const index = parseInt(item.getAttribute('data-feature'));
+
+                    // Reset all items styling
+                    featureItems.forEach((el) => {
+                        el.classList.remove('border-2', 'border-meta-blue', 'bg-blue-50/40');
+                        el.classList.add('border', 'border-gray-200', 'bg-white');
+                        const dot = el.querySelector('h3 span');
+                        if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-transparent';
+                        const chevron = el.querySelector('i');
+                        if (chevron) {
+                            chevron.classList.remove('rotate-90', 'text-meta-blue');
+                            chevron.classList.add('text-gray-400');
+                        }
+                        const desc = el.querySelector('.feature-desc');
+                        if (desc) desc.classList.add('hidden');
+                    });
+
+                    // Activate selected item
+                    item.classList.remove('border-gray-200', 'bg-white');
+                    item.classList.add('border-2', 'border-meta-blue', 'bg-blue-50/40');
+                    const activeDot = item.querySelector('h3 span');
+                    if (activeDot) activeDot.className = 'w-2.5 h-2.5 rounded-full bg-meta-blue';
+                    const activeChevron = item.querySelector('i');
+                    if (activeChevron) {
+                        activeChevron.classList.add('rotate-90', 'text-meta-blue');
+                        activeChevron.classList.remove('text-gray-400');
+                    }
+                    const activeDesc = item.querySelector('.feature-desc');
+                    if (activeDesc) activeDesc.classList.remove('hidden');
+
+                    // Smoothly animate preview content
+                    const data = featureData[index];
+                    previewBadge.textContent = data.badge;
+                    previewPromptText.textContent = data.prompt;
+                    previewImage.src = data.img;
+                    previewOverlayText.textContent = data.overlay;
+                    previewResponseText.textContent = data.response;
+                });
+            });
+
+            // 2. Chat Experience Tabs
+            const tabButtons = document.querySelectorAll('.chat-tab-btn');
+            const tabDesc = document.getElementById('chat-tab-description');
+
+            const tabDescriptions = {
+                feed: "Engage in natural fluid conversations, brainstorm ideas, get recommendations, and ask follow-up questions. Meta AI keeps context and helps you explore ideas deeply without missing a beat.",
+                attachments: "Upload PDFs, Excel sheets, code repositories, or documents. Meta AI summarizes complex reports, identifies key tables, and extracts immediate answers.",
+                voice: "Talk to Meta AI just like chatting with a real collaborator. Experience ultra-low latency voice mode with natural cadences and nuanced vocal inflections.",
+                photo: "Modify photos with everyday language. Ask Meta AI to change backdrops, erase photobombers, adjust lighting, or combine elements effortlessly."
+            };
+
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabButtons.forEach(b => {
+                        b.classList.remove('active', 'text-meta-blue', 'border-meta-blue');
+                        b.classList.add('border-transparent', 'text-gray-500');
+                    });
+
+                    btn.classList.add('active', 'text-meta-blue', 'border-meta-blue');
+                    btn.classList.remove('border-transparent', 'text-gray-500');
+
+                    const tabKey = btn.getAttribute('data-tab');
+                    if (tabDescriptions[tabKey]) {
+                        tabDesc.textContent = tabDescriptions[tabKey];
+                    }
+                });
+            });
+
+            // 3. FAQ Accordion Logic
+            const accordions = document.querySelectorAll('.accordion-toggle');
+            accordions.forEach(acc => {
+                acc.addEventListener('click', () => {
+                    const content = acc.nextElementSibling;
+                    const icon = acc.querySelector('.icon-container');
+                    const isExpanded = content.classList.contains('expanded');
+
+                    // Close all
+                    document.querySelectorAll('.accordion-content').forEach(c => {
+                        c.classList.remove('expanded');
+                    });
+                    document.querySelectorAll('.icon-container').forEach(ic => {
+                        ic.classList.remove('rotate-180', 'text-meta-blue');
+                    });
+
+                    // Toggle current
+                    if (!isExpanded) {
+                        content.classList.add('expanded');
+                        icon.classList.add('rotate-180', 'text-meta-blue');
+                    }
+                });
+            });
+
+            // Open first FAQ by default
+            if (accordions.length > 0) {
+                accordions[0].click();
+            }
+        });
+    </script>
+</body>
+</html>
